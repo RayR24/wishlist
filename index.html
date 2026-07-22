@@ -144,7 +144,6 @@
       border-color: #1a1a1a;
     }
 
-    /* Address section */
     .address-section {
       text-align: center;
       margin-top: 3.5rem;
@@ -152,82 +151,13 @@
       border-top: 1px solid #eee;
     }
 
-    .address-title {
+    .address-text {
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 0.85rem;
-      font-weight: 400;
-      color: #1a1a1a;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 0.8rem;
-    }
-
-    .address-subtitle {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 0.8rem;
       font-weight: 300;
       color: #999;
       letter-spacing: 1px;
-      margin-bottom: 1.5rem;
-    }
-
-    .address-form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.8rem;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-
-    .address-form input,
-    .address-form textarea {
-      width: 100%;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 0.85rem;
-      font-weight: 300;
-      color: #2c2c2c;
-      border: 1px solid #ddd;
-      padding: 0.8rem 1rem;
-      background: #fafafa;
-      outline: none;
-      transition: border-color 0.3s ease;
-      resize: vertical;
-    }
-
-    .address-form input:focus,
-    .address-form textarea:focus {
-      border-color: #999;
-    }
-
-    .address-form input::placeholder,
-    .address-form textarea::placeholder {
-      color: #ccc;
-      font-weight: 300;
-    }
-
-    .address-form textarea {
-      min-height: 80px;
-    }
-
-    .submit-btn {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 0.7rem;
-      font-weight: 400;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #ffffff;
-      background: #1a1a1a;
-      border: 1px solid #1a1a1a;
-      padding: 0.7rem 2.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 0.5rem;
-    }
-
-    .submit-btn:hover {
-      background: #333;
-      border-color: #333;
+      line-height: 1.6;
     }
 
     .footer {
@@ -273,7 +203,7 @@
   <div class="container">
     <div class="header">
       <h1>Rinae's Birthday Wishlist</h1>
-      <p class="birthday-date">🎂 15 September 2026</p>
+      <p class="birthday-date">🎂 24 August 2026</p>
       <p class="subtitle">A curated collection of things that would make me smile</p>
     </div>
 
@@ -281,17 +211,8 @@
       <!-- Gifts appear here -->
     </div>
 
-    <!-- Address request section -->
     <div class="address-section">
-      <p class="address-title">Delivery Address</p>
-      <p class="address-subtitle">If you'd like to send a gift directly, please share your address below</p>
-      <form class="address-form" id="addressForm">
-        <input type="text" id="fullName" placeholder="Full name" required>
-        <input type="tel" id="phone" placeholder="Phone number">
-        <textarea id="address" placeholder="Delivery address" required></textarea>
-        <button type="submit" class="submit-btn">Submit</button>
-      </form>
-      <p id="addressConfirmation" style="display: none; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 0.8rem; font-weight: 300; color: #999; margin-top: 1rem; letter-spacing: 1px;">Thank you! Your details have been noted.</p>
+      <p class="address-text">Please WhatsApp for my delivery address at <strong>065 987 2927/strong></p>
     </div>
 
     <div class="footer">
@@ -348,8 +269,7 @@
       }
     ];
 
-    // Build gift cards
-    const giftContainer = document.getElementById("wishlistContainer");
+    const container = document.getElementById("wishlistContainer");
     gifts.forEach(gift => {
       const card = document.createElement("div");
       card.className = "gift-card";
@@ -361,26 +281,7 @@
         ${gift.price ? `<div class="gift-price">${gift.price}</div>` : ""}
         <a class="buy-btn" href="${gift.link}" target="_blank" rel="noopener">View</a>
       `;
-      giftContainer.appendChild(card);
-    });
-
-    // Handle address form submission
-    const addressForm = document.getElementById("addressForm");
-    const confirmation = document.getElementById("addressConfirmation");
-
-    addressForm.addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      const name = document.getElementById("fullName").value;
-      const phone = document.getElementById("phone").value;
-      const address = document.getElementById("address").value;
-
-      // Here you could send this data to an email or a database
-      // For now, we just show a confirmation
-      console.log("Address received:", { name, phone, address });
-
-      addressForm.style.display = "none";
-      confirmation.style.display = "block";
+      container.appendChild(card);
     });
   </script>
 </body>
