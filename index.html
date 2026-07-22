@@ -44,6 +44,15 @@
       margin-bottom: 1rem;
     }
 
+    .birthday-date {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: #1a1a1a;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+    }
+
     .subtitle {
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 0.95rem;
@@ -135,9 +144,95 @@
       border-color: #1a1a1a;
     }
 
-    .footer {
+    /* Address section */
+    .address-section {
       text-align: center;
       margin-top: 3.5rem;
+      padding-top: 3rem;
+      border-top: 1px solid #eee;
+    }
+
+    .address-title {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: #1a1a1a;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .address-subtitle {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: #999;
+      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+    }
+
+    .address-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .address-form input,
+    .address-form textarea {
+      width: 100%;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: #2c2c2c;
+      border: 1px solid #ddd;
+      padding: 0.8rem 1rem;
+      background: #fafafa;
+      outline: none;
+      transition: border-color 0.3s ease;
+      resize: vertical;
+    }
+
+    .address-form input:focus,
+    .address-form textarea:focus {
+      border-color: #999;
+    }
+
+    .address-form input::placeholder,
+    .address-form textarea::placeholder {
+      color: #ccc;
+      font-weight: 300;
+    }
+
+    .address-form textarea {
+      min-height: 80px;
+    }
+
+    .submit-btn {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: #1a1a1a;
+      border: 1px solid #1a1a1a;
+      padding: 0.7rem 2.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 0.5rem;
+    }
+
+    .submit-btn:hover {
+      background: #333;
+      border-color: #333;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 2.5rem;
     }
 
     .footer-text {
@@ -178,11 +273,25 @@
   <div class="container">
     <div class="header">
       <h1>Rinae's Birthday Wishlist</h1>
+      <p class="birthday-date">🎂 15 September 2026</p>
       <p class="subtitle">A curated collection of things that would make me smile</p>
     </div>
 
     <div class="wishlist" id="wishlistContainer">
       <!-- Gifts appear here -->
+    </div>
+
+    <!-- Address request section -->
+    <div class="address-section">
+      <p class="address-title">Delivery Address</p>
+      <p class="address-subtitle">If you'd like to send a gift directly, please share your address below</p>
+      <form class="address-form" id="addressForm">
+        <input type="text" id="fullName" placeholder="Full name" required>
+        <input type="tel" id="phone" placeholder="Phone number">
+        <textarea id="address" placeholder="Delivery address" required></textarea>
+        <button type="submit" class="submit-btn">Submit</button>
+      </form>
+      <p id="addressConfirmation" style="display: none; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 0.8rem; font-weight: 300; color: #999; margin-top: 1rem; letter-spacing: 1px;">Thank you! Your details have been noted.</p>
     </div>
 
     <div class="footer">
@@ -194,55 +303,53 @@
     const gifts = [
       {
         name: "YSL Libre Parfum",
-        price: "",
         image: "https://assets.woolworthsstatic.co.za/Libre-Eau-de-Parfum-Intense-30ml-505637206.jpg?V=2y1r&o=eyJidWNrZXQiOiJ3dy1vbmxpbmUtaW1hZ2UtcmVzaXplIiwia2V5IjoiaW1hZ2VzL2VsYXN0aWNlcmEvcHJvZHVjdHMvaGVyby8yMDIxLTA2LTEwLzUwNTYzNzIwNl8zME1MX2hlcm8uanBnIn0&q=85",
         link: "https://www.woolworths.co.za/prod/_/A-505637206"
       },
       {
         name: "Amber Labdanum Cologne Intense",
-        price: "",
         image: "https://sdcdn.io/jm/jm_sku_L2CB01_3000x3000_0S.png?height=1400px&width=1400px",
         link: "https://www.bookshop.org/books/indoor-plant-books/"
       },
       {
         name: "Veuve Clicquot Bottle Holder",
-        price: "",
         image: "https://www.ngf.co.za/wp-content/uploads/2024/11/107017.jpg",
         link: "https://www.ngf.co.za/product/veuve-clicquot-yellow-label-bottle-holder-750ml/"
       },
       {
         name: "Citrine Necklace",
-        price: "",
         image: "https://downtoearthjewellery.co.za/cdn/shop/files/IMG_1798.jpg?v=1761999468&width=2200",
         link: "https://downtoearthjewellery.co.za/products/small-citrine-pendant-november-birthstone"
       },
       {
         name: "Coach Kisslock 16",
-        price: "",
         image: "https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/products/pictures/item/free/original/196395963225/Fko2FuM9oJJ-196395963225-1.jpg",
         link: "https://coach.co.za/product/kisslock-frame-bag-16-in-crystal-signature-jacquard?f_content=a2lzc2xvY2s6Ojo2Ojo6bXJ3MjFvcjEtb3p3azJvc3U%253D&f_medium=search"
       },
       {
         name: "Coach Jet Shoulder Bag",
-        price: "",
         image: "https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/products/pictures/item/free/original/4gqcP7lSF-product.jpeg",
         link: "https://coach.co.za/product/jet-shoulder-bag-196395766000?f_content=amV0Ojo6Mjo6Om1ydzI5MWtsLXdobXdyd3Vx&f_medium=search"
       },
       {
         name: "Wine Folly",
-        price: "",
         image: "https://media.takealot.com/covers_tsins/44159753/9780718183073-1-zoom.jpg",
         link: "https://www.takealot.com/wine-folly/PLID41395528"
       },
       {
+        name: "Brown Wooden Freestanding Wine Cabinet",
+        image: "https://media.takealot.com/covers_images/f62f513034c44947b6a1169792753440/s-zoom.file",
+        link: "https://www.takealot.com/4-tier-wooden-freestanding-wine-rack-multi-purpose-wine-cabinet/PLID100742025?colour_variant=Brown"
+      },
+      {
         name: "Modern Glass Coffee Table",
-        price: "",
         image: "https://media.takealot.com/covers_images/e9b475e99acd4e62beb25b95dc03daf1/s-zoom.file",
         link: "https://www.takealot.com/aeror-modern-glass-coffee-table-with-wooden-base/PLID101254690?colour_variant=Brown"
       }
     ];
 
-    const container = document.getElementById("wishlistContainer");
+    // Build gift cards
+    const giftContainer = document.getElementById("wishlistContainer");
     gifts.forEach(gift => {
       const card = document.createElement("div");
       card.className = "gift-card";
@@ -254,7 +361,26 @@
         ${gift.price ? `<div class="gift-price">${gift.price}</div>` : ""}
         <a class="buy-btn" href="${gift.link}" target="_blank" rel="noopener">View</a>
       `;
-      container.appendChild(card);
+      giftContainer.appendChild(card);
+    });
+
+    // Handle address form submission
+    const addressForm = document.getElementById("addressForm");
+    const confirmation = document.getElementById("addressConfirmation");
+
+    addressForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("fullName").value;
+      const phone = document.getElementById("phone").value;
+      const address = document.getElementById("address").value;
+
+      // Here you could send this data to an email or a database
+      // For now, we just show a confirmation
+      console.log("Address received:", { name, phone, address });
+
+      addressForm.style.display = "none";
+      confirmation.style.display = "block";
     });
   </script>
 </body>
