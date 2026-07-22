@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎂 My Birthday Wishlist</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f9f3e7, #ffe9ec);
+      margin: 0;
+      padding: 2rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 700px;
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      padding: 2rem 2rem 3rem;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.2rem;
+      color: #d23669;
+    }
+    .subtitle {
+      color: #888;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    .wishlist {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .gift-card {
+      background: #fff5f7;
+      border-radius: 20px;
+      padding: 1.2rem 0.8rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .gift-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+    }
+    .gift-card img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 0.8rem;
+      border: 3px solid white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+    .gift-name {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin: 0.3rem 0;
+      color: #444;
+    }
+    .gift-price {
+      color: #d23669;
+      font-weight: 600;
+      margin: 0.2rem 0 0.8rem;
+    }
+    .buy-btn {
+      background: #d23669;
+      color: white;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+      margin-top: auto;
+    }
+    .buy-btn:hover {
+      background: #b12b56;
+    }
+    .footer {
+      margin-top: 2.5rem;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+    @media (max-width: 500px) {
+      .container {
+        padding: 1.5rem 1rem 2rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎁 My Birthday Wishlist</h1>
+    <p class="subtitle">If you're looking for the perfect gift, here's what would make me smile!</p>
+
+    <div class="wishlist" id="wishlistContainer">
+      <!-- Gifts will show up here automatically -->
+    </div>
+
+    <div class="footer">
+      ✨ Click any button to see the product page ✨
+    </div>
+  </div>
+
+  <script>
+    const gifts = [
+      {
+        name: "Cozy Throw Blanket",
+        price: "$35",
+        image: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=200&h=200&fit=crop",
+        link: "https://www.amazon.com/dp/B07YS4Z6N9/"
+      },
+      {
+        name: "Wireless Earbuds",
+        price: "$49",
+        image: "https://images.unsplash.com/photo-1590658268037-6bfa11137e8d?w=200&h=200&fit=crop",
+        link: "https://www.amazon.com/dp/B08HR78FZ3/"
+      },
+      {
+        name: "Scented Candle Set",
+        price: "$22",
+        image: "https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=200&h=200&fit=crop",
+        link: "https://www.etsy.com/listing/123456/"
+      },
+      {
+        name: "Plant Parent Book",
+        price: "$18",
+        image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=200&h=200&fit=crop",
+        link: "https://www.bookshop.org/books/indoor-plant-books/"
+      }
+    ];
+
+    const container = document.getElementById("wishlistContainer");
+    gifts.forEach(gift => {
+      const card = document.createElement("div");
+      card.className = "gift-card";
+      card.innerHTML = `
+        <img src="${gift.image}" alt="${gift.name}" loading="lazy">
+        <div class="gift-name">${gift.name}</div>
+        ${gift.price ? `<div class="gift-price">${gift.price}</div>` : ""}
+        <a class="buy-btn" href="${gift.link}" target="_blank" rel="noopener">View Gift 🎀</a>
+      `;
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
