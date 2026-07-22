@@ -70,15 +70,43 @@
     .gift-card {
       background: #ffffff;
       text-align: center;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, opacity 0.3s ease;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding-bottom: 0.3rem;
+      position: relative;
+    }
+
+    .gift-card.purchased {
+      opacity: 0.45;
+    }
+
+    .gift-card.purchased .image-frame::after {
+      content: 'Purchased';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-25deg);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #1a1a1a;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      border: 1px solid #1a1a1a;
+      padding: 0.4rem 1rem;
+      background: rgba(255, 255, 255, 0.85);
+      pointer-events: none;
+      z-index: 2;
     }
 
     .gift-card:hover {
       transform: translateY(-4px);
+    }
+
+    .gift-card.purchased:hover {
+      transform: none;
     }
 
     .image-frame {
@@ -87,6 +115,7 @@
       overflow: hidden;
       margin-bottom: 1.2rem;
       background: #f9f9f9;
+      position: relative;
     }
 
     .gift-card img {
@@ -97,7 +126,7 @@
       transition: transform 0.5s ease;
     }
 
-    .gift-card:hover img {
+    .gift-card:not(.purchased):hover img {
       transform: scale(1.04);
     }
 
@@ -108,7 +137,7 @@
       color: #2c2c2c;
       letter-spacing: 0.5px;
       line-height: 1.4;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.3rem;
       padding: 0 0.3rem;
     }
 
@@ -119,7 +148,7 @@
       color: #999;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.5rem;
     }
 
     .buy-btn {
@@ -144,6 +173,29 @@
       border-color: #1a1a1a;
     }
 
+    .purchased-toggle {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 0.65rem;
+      font-weight: 300;
+      color: #bbb;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-top: 0.6rem;
+      padding: 0.3rem 0.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .purchased-toggle:hover {
+      color: #1a1a1a;
+    }
+
+    .gift-card.purchased .purchased-toggle {
+      color: #1a1a1a;
+    }
+
     .address-section {
       text-align: center;
       margin-top: 3.5rem;
@@ -162,7 +214,7 @@
 
     .footer {
       text-align: center;
-      margin-top: 2.5rem;
+      margin-top: 1rem;
     }
 
     .footer-text {
@@ -212,11 +264,11 @@
     </div>
 
     <div class="address-section">
-      <p class="address-text">Please WhatsApp for my delivery address at <strong>065 987 2927/strong></p>
+      <p class="address-text">Please WhatsApp for my delivery address at <strong>065 987 2927</strong></p>
     </div>
 
     <div class="footer">
-      <p class="footer-text">Click any item to view it</p>
+      <p class="footer-text">Click any item to view it · Mark gifts as purchased to avoid duplicates</p>
     </div>
   </div>
 
@@ -269,10 +321,18 @@
       }
     ];
 
+    // Load saved purchased state from browser storage
+    const savedPurchased = JSON.parse(localStorage.getItem("purchasedGifts") || "[]");
+
     const container = document.getElementById("wishlistContainer");
-    gifts.forEach(gift => {
+
+    gifts.forEach((gift, index) => {
+      const isPurchased = savedPurchased.includes(index);
+
       const card = document.createElement("div");
       card.className = "gift-card";
+      if (isPurchased) card.classList.add("purchased");
+
       card.innerHTML = `
         <div class="image-frame">
           <img src="${gift.image}" alt="${gift.name}" loading="lazy">
@@ -280,7 +340,29 @@
         <div class="gift-name">${gift.name}</div>
         ${gift.price ? `<div class="gift-price">${gift.price}</div>` : ""}
         <a class="buy-btn" href="${gift.link}" target="_blank" rel="noopener">View</a>
+        <button class="purchased-toggle">${isPurchased ? "✓ Purchased" : "Mark as purchased"}</button>
       `;
+
+      // Toggle purchased state
+      const toggleBtn = card.querySelector(".purchased-toggle");
+      toggleBtn.addEventListener("click", () => {
+        card.classList.toggle("purchased");
+        const currentlyPurchased = card.classList.contains("purchased");
+
+        // Update button text
+        toggleBtn.textContent = currentlyPurchased ? "✓ Purchased" : "Mark as purchased";
+
+        // Save to browser storage
+        const updatedPurchased = JSON.parse(localStorage.getItem("purchasedGifts") || "[]");
+        if (currentlyPurchased) {
+          if (!updatedPurchased.includes(index)) updatedPurchased.push(index);
+        } else {
+          const pos = updatedPurchased.indexOf(index);
+          if (pos > -1) updatedPurchased.splice(pos, 1);
+        }
+        localStorage.setItem("purchasedGifts", JSON.stringify(updatedPurchased));
+      });
+
       container.appendChild(card);
     });
   </script>
